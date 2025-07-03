@@ -1,0 +1,22 @@
+# Ignore H5 models and other model files
+*.keras
+*.h5
+*.model
+*.pb
+*.pth
+*.pt
+*.onnx
+
+# Ignore TensorFlow and Keras checkpoints
+*.ckpt
+*.ckpt.index
+*.ckpt.data-00000-of-00001
+
+# Ignore PyTorch checkpoints
+*.pth.tar
+*.pt.tar
+
+# Ignore venv and virtual environment directories
+venv/
+.env/
+__pycache__/
