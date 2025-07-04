@@ -17,7 +17,8 @@ import matplotlib.cm as cm
 import time
 
 # 📦 Load model
-model = load_model('my_model.h5')
+# model = load_model('my_model.h5')
+model = load_model('tb_detector_model_v1.h5')
 
 # 🎯 App title
 st.title("🩺 TB Chest X-Ray Classifier with Grad-CAM")
