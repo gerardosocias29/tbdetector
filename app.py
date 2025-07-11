@@ -73,11 +73,11 @@ if uploaded_file:
         file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
         image = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
 
-        status.write("✅ Image loaded and preprocessed.")
-
         if not is_possible_xray(image):
-            status.error("🚫 This image does not appear to be a valid chest X-ray. Please upload a proper medical X-ray image.")
-            status.stop()
+            status.write("🚫 This image does not appear to be a valid chest X-ray. Please upload a proper medical X-ray image.")
+            st.stop()
+
+        status.write("✅ Image loaded and preprocessed.")
 
         img_input = preprocess_image(image)
         img_expanded = np.expand_dims(img_input, axis=0)
