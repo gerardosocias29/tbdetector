@@ -74,7 +74,7 @@ if uploaded_file:
         image = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
 
         if not is_possible_xray(image):
-            tatus.update(label="❌ Prediction cancelled", state="error")
+            status.update(label="❌ Prediction cancelled", state="error")
             status.write("🚫 This image does not appear to be a valid chest X-ray. Please upload a proper medical X-ray image.")
             st.stop()
 
