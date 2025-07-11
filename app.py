@@ -59,6 +59,12 @@ def make_gradcam_heatmap(img_array, model, last_conv_layer_name="Conv_1"):
     heatmap = tf.maximum(heatmap, 0) / tf.math.reduce_max(heatmap)
     return heatmap.numpy()
 
+def is_possible_xray(image):
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    brightness = np.mean(gray)
+    stddev = np.std(gray)
+    return 30 < brightness < 180 and stddev > 20
+
 # 🚀 UI: Only run prediction when user clicks "Predict"
 if uploaded_file:
     st.markdown("---")
@@ -68,6 +74,11 @@ if uploaded_file:
         image = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
 
         status.write("✅ Image loaded and preprocessed.")
+
+        if not is_possible_xray(image):
+            status.error("🚫 This image does not appear to be a valid chest X-ray. Please upload a proper medical X-ray image.")
+            status.stop()
+
         img_input = preprocess_image(image)
         img_expanded = np.expand_dims(img_input, axis=0)
 
@@ -88,7 +99,7 @@ if uploaded_file:
 
         col1, col2 = st.columns(2)
         with col1:
-            st.image(image, caption="Original X-ray", use_column_width=True)
+            st.image(image, caption="Original X-ray", use_container_width=True)
         with col2:
             overlay_uint8 = (overlay * 255).astype(np.uint8)
-            st.image(overlay_uint8, caption="Grad-CAM Heatmap", use_column_width=True)
+            st.image(overlay_uint8, caption="Grad-CAM Heatmap", use_container_width=True)
